@@ -2,9 +2,8 @@ require 'artii'
 
 module MenuView
   def self.welcome
-    system 'clear'
-    welcome = Artii::Base.new :font => 'usaflag'
-    #doom, bubble
+    welcome = Artii::Base.new :font => 'sblood'
+    #doom, bubble, usaflag, rounded
     puts welcome.asciify("welcome")
     puts welcome.asciify("to")
     puts welcome.asciify("pawn")
@@ -23,4 +22,11 @@ module MenuView
 end
 
 module ControllerView
+  def self.print(output)
+    puts output
+  end
+
+  def self.clear_terminal
+    system 'clear'
+  end
 end

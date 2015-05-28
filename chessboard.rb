@@ -31,9 +31,11 @@ class ChessBoard
 
 end
 
+
 board = ChessBoard.new
 
 board.to_s
 board.move("e2", "e5")
 board.to_s
+
 
