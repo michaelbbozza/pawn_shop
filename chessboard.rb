@@ -43,15 +43,29 @@ class ChessBoard
     puts                       "    a   b   c   d   e   f   g   h "
   end
 
+  def number_converter(string)
+    string = string.split("")
+    (9 - string.last.to_i).to_s + LETTERS[string.first].to_s
+  end
+
   def location_converter(start)
-    location = start.split("")
-    piece = (9 - location.last.to_i).to_s + LETTERS[location.first].to_s
+    piece = number_converter(start)
     return @board[piece]
   end
+
+  def move(source,target)
+    source = number_converter(source)
+    target = number_converter(target)
+    @board[target] = @board[source]
+    @board[source] = []
+  end
+
 
 end
 
 board = ChessBoard.new
 
+board.to_s
+board.move("d2", "d3")
 board.to_s
 
