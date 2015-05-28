@@ -43,10 +43,10 @@ class ChessBoard
     puts                       "    a   b   c   d   e   f   g   h "
   end
 
-  def test_method(start)
-    location = start.split
-    piece = @board[LETTERS[location.first].to_s + location.last]
-    puts piece
+  def location_converter(start)
+    location = start.split("")
+    piece = (9 - location.last.to_i).to_s + LETTERS[location.first].to_s
+    return @board[piece]
   end
 
 end
@@ -54,3 +54,4 @@ end
 board = ChessBoard.new
 
 board.to_s
+
