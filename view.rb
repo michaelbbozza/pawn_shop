@@ -2,7 +2,7 @@ require 'artii'
 
 module MenuView
   def self.welcome
-    welcome = Artii::Base.new :font => 'sblood'
+    welcome = Artii::Base.new :font => 'rounded'
     puts welcome.asciify("welcome")
     puts welcome.asciify("to")
     puts welcome.asciify("pawn")
