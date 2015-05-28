@@ -50,7 +50,3 @@ class ChessBoard
   end
 
 end
-
-board = ChessBoard.new
-
-board.to_s
