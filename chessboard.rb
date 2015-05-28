@@ -1,14 +1,18 @@
 require 'pry'
+require_relative 'loadboard'
 require_relative 'piece'
 
 class ChessBoard
+  attr_accessor :board
   def initialize
     @board = {}
+
     (1..8).each do |x|
       (1..8).each do |y|
         @board["#{x.to_s}#{y.to_s}"] = []
       end
     end
+
     (21..28).each {|int| @board[int.to_s] = Pawn.new("black")}
     (71..78).each {|int| @board[int.to_s] = Pawn.new("white")}
     [11, 18].each {|int| @board[int.to_s] = Rook.new("black")}
@@ -21,14 +25,11 @@ class ChessBoard
     @board[15.to_s] = King.new("black")
     @board[84.to_s] = King.new("white")
     @board[85.to_s] = Queen.new("white")
-
-
   end
 
   def to_s
-    line_width = 1000
     @board.map {|k,v| v != [] ? v.character : " "}.each_slice(8).to_a.each_with_index do |arr, index|
-      puts ("#{index}| ") + arr.join(" | ") + "\n  _______________________________|\n"
+      puts ("#{8 - index }| ") + arr.join(" | ") + "\n  _______________________________|\n"
     end
     puts                       "    a   b   c   d   e   f   g   h "
   end
