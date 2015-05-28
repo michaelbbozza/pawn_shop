@@ -25,7 +25,7 @@ class Controller
   end
 
   def self.run
-    2.times do
+    10.times do
       source = ControllerView.get_user_piece
       target = ControllerView.get_user_target
       sleep 0.4
