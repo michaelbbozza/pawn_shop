@@ -4,8 +4,9 @@ module MenuView
   def self.welcome
     system 'clear'
     welcome = Artii::Base.new :font => 'usaflag'
+    #doom, bubble
     puts welcome.asciify("welcome")
-        puts welcome.asciify("to")
+    puts welcome.asciify("to")
     puts welcome.asciify("pawn")
     puts welcome.asciify("shop")
     puts welcome.asciify("chess")
