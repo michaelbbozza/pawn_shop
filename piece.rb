@@ -83,7 +83,3 @@ class King < Piece
   end
 end
 
-# puts "8 ║♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜"
-# puts "♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙"
-# puts "♖ … ♗ ♕ ♔ ♗ ♘ ♖"
-# puts "♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟"
