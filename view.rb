@@ -84,4 +84,7 @@ module ControllerView
     gets.chomp.downcase
   end
 
+  def invalid_move
+    puts "That is an invalid move."
+  end
 end

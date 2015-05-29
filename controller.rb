@@ -49,13 +49,20 @@ class Controller
     20.times do
       source = ControllerView.get_user_piece
       board_index = @game_board.number_converter(source)
-      piece_possible_moves = @game_board.board[board_index].possible_moves(board_index, @game_board.board)
+      # binding.pry
+      piece_possible_moves = @game_board.board[board_index].possible_moves(board_index,@game_board.board)
       ControllerView.give_possible_moves(piece_possible_moves)
       target = ControllerView.get_user_target
+      # if @game_board.board[board_index].possible_moves(target.split(""), @game_board.board)
+      #   true
+      # else
+      #   ControllerView.invalid_move
+      #   run_new_game
+      # end
       sleep 0.4
       @game_board.move(source,target)
-      # @game_board.set_variables
-      # @game_board.in_check?(player)
+      @game_board.set_variables
+      @game_board.in_check?(player) # may need to be changed
       ControllerView.clear_terminal
       ControllerView.print(@game_board.to_s)
       ControllerView.turn

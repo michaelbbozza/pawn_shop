@@ -11,6 +11,9 @@ LETTERS = {
 }
 
 KNIGHT_DIRECTIONS = [[2,1], [2,-1], [1,2], [1,-2], [-1,2], [-1,-2], [-2,1], [-2,-1]]
+KING_DIRECTIONS = [[0,1],[1,1],[1,0],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1]]
+BISHOP_DIRECTIONS = [[1,1], [1,-1],[-1,-1],[-1,1]]
+ROOK_DIRECTIONS = [[0,1],[1,0],[0,-1],[-1,0]]
 ## module for loading the board with starting position
 module LoadBoard
   def self.load_board
@@ -31,10 +34,8 @@ module LoadBoard
     [83, 86].each {|int| @board[int.to_s] = Bishop.new("white")}
     @board[14.to_s] = Queen.new("black")
     @board[15.to_s] = King.new("black")
-    @board[84.to_s] = King.new("white")
-    @board[85.to_s] = Queen.new("white")
+    @board[85.to_s] = King.new("white")
+    @board[84.to_s] = Queen.new("white")
     @board
   end
 end
-
-

@@ -1,13 +1,70 @@
 require 'pry'
 require_relative 'loadboard'
 require_relative 'piece'
+require_relative 'hashmap'
 
 class ChessBoard
   include LoadBoard
-  attr_accessor :board
+  include HashMap
+  attr_accessor :board, :black_moves, :white_moves, :b_king, :w_king
   def initialize
     ## set up a hash with 64 empty values
     @board = LoadBoard.load_board
+    @winner = nil
+
+    @b_king = generate_king("black")
+    @w_king = generate_king("white")
+    @black_moves = [1]
+    @white_moves = [2]
+  end
+
+  def generate_king(color)
+    @board.select{|k,v| v.class.ancestors.include?(Piece) && v.color == color && v.class == King }
+  end
+
+  def generate_moves(color)
+    if !in_check?(color)
+      all_moves = []
+      @board.select {|k,v| v.class.ancestors.include?(Piece) && v.color == color }.each do |piece, val|
+        all_moves << val.possible_moves(piece, @board)
+      end
+    else
+      all_moves = []
+      @board.select {|k,v| v.class.ancestors.include?(Piece) && v.color == color }.each do |piece, val|
+        piece_moves = val.possible_moves(piece, @board)
+        piece_moves.each do |piece_move|
+          move(HashMap.to_board(piece).join, piece_move.join(""))
+          if in_check?(color)
+            move(piece_move.join(""), HashMap.to_board(piece).join)
+          else
+            all_moves << piece_move
+            move(piece_move.join(""), HashMap.to_board(piece).join)
+          end
+        end
+      end
+    end
+    all_moves.delete("[]")
+    all_moves.flatten.each_slice(2).to_a
+    # binding.pry
+  end
+
+  def checkmate?
+    if @black_moves.size == 0
+      @winner = "white"
+      return true
+    elsif @white_moves.size == 0
+      @winner = "black"
+      return true
+    end
+    return false
+  end
+
+  def in_check?(color)
+    if color == "white"
+      @black_moves.include?(HashMap.to_board(@w_king.keys[0]))
+    else
+      @white_moves.include?(HashMap.to_board(@b_king.keys[0]))
+    end
   end
 
   def to_s ## prints the board to the screen
@@ -29,12 +86,25 @@ class ChessBoard
     @board[source] = []
   end
 
+
+  def set_variables
+    @b_king = generate_king("black")
+    @w_king = generate_king("white")
+    @black_moves = generate_moves("black")
+    @white_moves = generate_moves("white")
+    @black_moves = generate_moves("black")
+    @white_moves = generate_moves("white")
+  end
+
+  def test(board)
+    set_variables
+    board.to_s
+    puts board.in_check?("black")
+    puts board.b_king
+    puts HashMap.to_board(@b_king.keys[0])
+    puts board.white_moves.to_s
+    if checkmate?
+      puts "Winner is #{@winner}"
+    end
+  end
 end
-
-board = ChessBoard.new
-
-board.to_s
-board.move("e2", "e5")
-board.to_s
-puts board.board["12"].possible_moves("12", board.board)
-
