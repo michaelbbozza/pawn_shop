@@ -57,8 +57,8 @@ module ControllerView
     PLAYER.rotate!
   end
 
-  def self.turn
-    puts "#{PLAYER.first} may go."
+  def self.turn(player)
+    puts "#{player}'s turn!"
   end
 
   def self.continue
@@ -75,6 +75,10 @@ module ControllerView
     puts "Goodbye"
   end
 
+  def self.check?
+    puts "Check motha fucka"
+  end
+
   def self.user_input
     gets.chomp.downcase
   end
@@ -84,4 +88,7 @@ module ControllerView
     gets.chomp.downcase
   end
 
+  def invalid_move
+    puts "That is an invalid move."
+  end
 end
