@@ -30,7 +30,7 @@ class Pawn < Piece
     if board[next_piece] == []
       poss_moves << next_piece.split("")
       next_next = (next_piece.split("")[0].to_i + @move).to_s + next_piece.split("")[1].to_s
-      if board[next_next] == []
+      if board[next_next] == [] && @first_move == false
         poss_moves << next_next.split("")
       end
     end
@@ -62,6 +62,23 @@ class Bishop < Piece
     end
   end
 
+  def possible_moves(location, board)
+    poss_moves = []
+    BISHOP_DIRECTIONS.each do |direction|
+      (1..8).each do |int|
+        new_direction = direction.map {|x| x*int }
+        next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
+        if board[next_space.join("")] == [] ||
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          poss_moves << next_space
+        else
+          break
+        end
+      end
+    end
+    poss_moves.map! {|move| HashMap.to_board(move) }
+    poss_moves.to_s
+  end
 end
 
 class Rook < Piece
@@ -75,6 +92,23 @@ class Rook < Piece
     end
   end
 
+  def possible_moves(location, board)
+    poss_moves = []
+    ROOK_DIRECTIONS.each do |direction|
+      (1..8).each do |int|
+        new_direction = direction.map {|x| x*int }
+        next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
+        if board[next_space.join("")] == [] ||
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          poss_moves << next_space
+        else
+          break
+        end
+      end
+    end
+    poss_moves.map! {|move| HashMap.to_board(move) }
+    poss_moves.to_s
+  end
 end
 
 class Knight < Piece
@@ -121,6 +155,36 @@ class Queen < Piece
     end
   end
 
+  def possible_moves(location, board)
+    poss_moves = []
+    BISHOP_DIRECTIONS.each do |direction|
+      (1..8).each do |int|
+        new_direction = direction.map {|x| x*int }
+        next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
+        if board[next_space.join("")] == [] ||
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          poss_moves << next_space
+        else
+          break
+        end
+      end
+    end
+    ROOK_DIRECTIONS.each do |direction|
+      (1..8).each do |int|
+        new_direction = direction.map {|x| x*int }
+        next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
+        if board[next_space.join("")] == [] ||
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          poss_moves << next_space
+        else
+          break
+        end
+      end
+    end
+    ## convert the indices to user readable format
+    poss_moves.map! {|move| HashMap.to_board(move) }
+    poss_moves.to_s
+  end
 end
 
 class King < Piece

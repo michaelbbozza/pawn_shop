@@ -34,8 +34,12 @@ end
 board = ChessBoard.new
 
 board.to_s
+
+#Queen test
+board.move("f2", "f4")
+board.move("d2", "d4")
 board.move("e2", "e4")
-board.move("d7", "d5")
 board.to_s
-puts board.board["44"].possible_moves("44", board.board)
+# puts board.board["85"].possible_moves("85", board.board)
+puts board.board["86"].possible_moves("86", board.board)
 

@@ -12,6 +12,8 @@ LETTERS = {
 
 KNIGHT_DIRECTIONS = [[2,1], [2,-1], [1,2], [1,-2], [-1,2], [-1,-2], [-2,1], [-2,-1]]
 KING_DIRECTIONS = [[0,1],[1,1],[1,0],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1]]
+BISHOP_DIRECTIONS = [[1,1], [1,-1],[-1,-1],[-1,1]]
+ROOK_DIRECTIONS = [[0,1],[1,0],[0,-1],[-1,0]]
 ## module for loading the board with starting position
 module LoadBoard
   def self.load_board
