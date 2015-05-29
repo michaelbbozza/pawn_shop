@@ -1,10 +1,12 @@
 require 'pry'
 require_relative 'loadboard'
 require_relative 'piece'
+require_relative 'hashmap'
 
 class ChessBoard
   include LoadBoard
-  attr_accessor :board
+  include HashMap
+  attr_accessor :board, :black_moves, :white_moves, :b_king, :w_king
   def initialize
     ## set up a hash with 64 empty values
     @board = LoadBoard.load_board
@@ -15,7 +17,7 @@ class ChessBoard
     @w_king = generate_king("white")
     @attack_pieces_white = []
     @attack_pieces_black = []
-    binding.pry
+    # binding.pry
   end
 
   def generate_king(color)
@@ -29,6 +31,14 @@ class ChessBoard
     end
     all_moves.delete("[]")
     all_moves.flatten.each_slice(2).to_a
+  end
+
+  def in_check?(color)
+    if color == "white"
+      @black_moves.include?(HashMap.to_board(@w_king.keys[0]))
+    else
+      @white_moves.include?(HashMap.to_board(@b_king.keys[0]))
+    end
   end
 
   def to_s ## prints the board to the screen
@@ -56,18 +66,31 @@ board = ChessBoard.new
 
 board.to_s
 
-board.move("f2", "f4")
-board.move("d2", "d4")
 board.move("e2", "e4")
+board.move("a7", "a6")
+board.in_check?("black")
+board.move("d1", "h5")
+board.move("b8", "a6")
+board.move("f1", "c4")
+board.move("a6", "a5")
+board.move("c4", "f7")
+board.white_moves = board.generate_moves("white")
+board.w_king = board.generate_king("black")
+p board.white_moves
+p board.b_king
+puts board.in_check?("black")
+
 board.to_s
+# binding.pry
 #Queen test
-puts board.board["85"].possible_moves("85", board.board)
-#Bishop test
-puts board.board["86"].possible_moves("86", board.board)
-#Pawn test
-puts board.board["71"].possible_moves("71", board.board)
-#King test
-puts board.board["84"].possible_moves("84", board.board)
+# puts board.board["75"].possible_moves("85", board.board)
+# #Bishop test
+# puts board.board["86"].possible_moves("86", board.board)
+# #Pawn test
+# puts board.board["71"].possible_moves("71", board.board)
+# #King test
+# puts board.board["84"].possible_moves("84", board.board)
+# puts board.in_check?("white")
 
 
 

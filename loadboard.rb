@@ -34,8 +34,8 @@ module LoadBoard
     [83, 86].each {|int| @board[int.to_s] = Bishop.new("white")}
     @board[14.to_s] = Queen.new("black")
     @board[15.to_s] = King.new("black")
-    @board[84.to_s] = King.new("white")
-    @board[85.to_s] = Queen.new("white")
+    @board[85.to_s] = King.new("white")
+    @board[84.to_s] = Queen.new("white")
     @board
   end
 end
