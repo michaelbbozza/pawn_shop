@@ -44,7 +44,7 @@ class Pawn < Piece
     end
     # ## convert the indices to user readable format
     poss_moves.map! {|move| HashMap.to_board(move) }
-    poss_moves.to_s
+    poss_moves
   end
 
   def move_helper
@@ -126,10 +126,10 @@ class Knight < Piece
     poss_moves = []
     ## collect all directional moves of the knight
     KNIGHT_DIRECTIONS.each do | xy |
-      poss_moves << [(location.split("")[0].to_i + xy[0]), (location.split("")[1].to_i + xy[1])]
+      poss_moves << [(location.split("")[0].to_i + xy[0]).to_s, (location.split("")[1].to_i + xy[1]).to_s]
     end
     ## delete the position if it is not contained in the board
-    poss_moves.delete_if{|arr| !arr.all? {|x| x > 0 && x <= 8 }}
+    poss_moves.delete_if{|arr| !arr.all? {|x| x.to_i > 0 && x.to_i <= 8 }}
     ## delete the position if it contains a piece of the same color
     poss_moves.each_with_index do |move, index|
       if board[move.join].class.ancestors.include?(Piece)
@@ -140,7 +140,7 @@ class Knight < Piece
     end
     ## convert the indices to user readable format
     poss_moves.map! {|move| HashMap.to_board(move) }
-    poss_moves.to_s
+    poss_moves
   end
 end
 

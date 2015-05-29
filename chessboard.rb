@@ -8,6 +8,27 @@ class ChessBoard
   def initialize
     ## set up a hash with 64 empty values
     @board = LoadBoard.load_board
+    @winner = nil
+    @black_moves = generate_moves("black")
+    @white_moves = generate_moves("white")
+    @b_king = generate_king("black")
+    @w_king = generate_king("white")
+    @attack_pieces_white = []
+    @attack_pieces_black = []
+    binding.pry
+  end
+
+  def generate_king(color)
+    @board.select{|k,v| v.class.ancestors.include?(Piece) && v.color == color && v.class == King }
+  end
+
+  def generate_moves(color)
+    all_moves = []
+    @board.select {|k,v| v.class.ancestors.include?(Piece) && v.color == color }.each do |piece, val|
+      all_moves << val.possible_moves(piece, @board)
+    end
+    all_moves.delete("[]")
+    all_moves.flatten.each_slice(2).to_a
   end
 
   def to_s ## prints the board to the screen
