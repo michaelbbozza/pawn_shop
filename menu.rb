@@ -1,3 +1,4 @@
+# require
 module Menu
 
   def self.start
@@ -10,7 +11,7 @@ module Menu
     if input == 'new'
       Controller.start_game
     elsif input == 'load'
-      puts "NO"
+      Controller.resume_game
     elsif input == 'exit' || input == 'quit'
       exit
     else

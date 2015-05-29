@@ -2,11 +2,15 @@ require_relative 'view'
 require_relative 'chessboard'
 require_relative 'piece'
 require_relative 'menu'
+require_relative 'Parser'
+require 'pry'
 
 class Controller
   def initialize
     ControllerView.clear_terminal
+    # @game_board = ChessBoard.new
     Menu.start
+    # binding.pry
   end
 
   def self.start_game
@@ -31,8 +35,14 @@ class Controller
     end
   end
 
+  def self.resume_game
+  #   # @old_board = @game_board.dup
+  #   Parser.import('chess.csv')
+  #   ControllerView.print(@old_board.to_s)
+  end
+
   def self.run
-    10.times do
+    2.times do
       source = ControllerView.get_user_piece
       target = ControllerView.get_user_target
       sleep 0.4
@@ -45,8 +55,8 @@ class Controller
     input = ControllerView.user_input
     if input == 'yes'
       run
-    # elsif input == 'save'
-    #   Parser.save
+    elsif input == 'save'
+      Parser.save(@game_board.board)
     elsif input == 'no' ||input == 'exit' || input == 'quit'
       ControllerView.clear_terminal
       ControllerView.goodbye
