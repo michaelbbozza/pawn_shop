@@ -17,7 +17,14 @@ class Controller
     if input == 'yes'
       sleep 0.5
       run
-    else
+    elsif input != 'no'
+      input = ControllerView.reenter_option
+      if input == 'yes'
+        run
+      elsif input == 'no'
+        ControllerView.goodbye
+      end
+    elsif input == 'no'
       ControllerView.clear_terminal
       ControllerView.goodbye
       exit
@@ -38,6 +45,8 @@ class Controller
     input = ControllerView.user_input
     if input == 'yes'
       run
+    # elsif input == 'save'
+    #   Parser.save
     elsif input == 'no' ||input == 'exit' || input == 'quit'
       ControllerView.clear_terminal
       ControllerView.goodbye

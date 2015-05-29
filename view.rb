@@ -55,6 +55,11 @@ module ControllerView
     puts "Would you like to continue?"
   end
 
+  def self.save
+    puts "Would you like to save or exit?"
+    gets.chomp.downcase
+  end
+
   def self.goodbye
     puts "Goodbye"
   end
@@ -62,4 +67,10 @@ module ControllerView
   def self.user_input
     gets.chomp.downcase
   end
+
+  def self.reenter_option
+    puts "I'm sorry. Please enter 'yes' or 'no'."
+    gets.chomp.downcase
+  end
+
 end
