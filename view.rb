@@ -1,5 +1,6 @@
 require 'artii'
 
+
 module MenuView
   def self.welcome
     welcome = Artii::Base.new :font => 'rounded'
@@ -15,6 +16,7 @@ module MenuView
     puts 'I did not understand what you wanted. Please re-enter your choice:'
     puts "'New' or 'Load'"
   end
+
   def self.user_input
     gets.chomp.downcase
   end
@@ -36,6 +38,11 @@ module ControllerView
     gets.chomp.downcase
   end
 
+  def self.give_possible_moves(output)
+    puts "Here are your possible moves: "
+    puts output
+  end
+
   def self.get_user_target
     puts "Where would you like to move?"
     gets.chomp.downcase
@@ -46,9 +53,12 @@ module ControllerView
     gets.chomp.downcase
   end
 
+  def self.rotate_player
+    PLAYER.rotate!
+  end
+
   def self.turn
-    player = PLAYER.rotate!
-    puts "#{player.first} may go."
+    puts "#{PLAYER.first} may go."
   end
 
   def self.continue

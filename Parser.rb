@@ -1,7 +1,5 @@
 require 'csv'
 
-
-
 module Parser
 
   def self.import(file)
