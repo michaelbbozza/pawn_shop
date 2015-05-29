@@ -10,10 +10,12 @@ module Menu
     if input == 'new'
       Controller.start_game
     elsif input == 'load'
-      puts "hi"
+      puts "NO"
+    elsif input == 'exit' || input == 'quit'
+      exit
     else
-      MenuView.user_fucked_up
-      input = MenuView.user_input
+      MenuView.user_messed_up
+      play
     end
   end
 
