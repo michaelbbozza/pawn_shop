@@ -35,11 +35,18 @@ board = ChessBoard.new
 
 board.to_s
 
-#Queen test
 board.move("f2", "f4")
 board.move("d2", "d4")
 board.move("e2", "e4")
 board.to_s
-# puts board.board["85"].possible_moves("85", board.board)
+#Queen test
+puts board.board["85"].possible_moves("85", board.board)
+#Bishop test
 puts board.board["86"].possible_moves("86", board.board)
+#Pawn test
+puts board.board["71"].possible_moves("71", board.board)
+#King test
+puts board.board["84"].possible_moves("84", board.board)
+
+
 
