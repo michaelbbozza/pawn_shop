@@ -18,7 +18,7 @@ class Pawn < Piece
       @character = "♟"
       @move = -1
     else
-      @character = "♙"
+      @character = "♙"f
       @move = 1
     end
   end
