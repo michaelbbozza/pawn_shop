@@ -53,6 +53,7 @@ module ControllerView
 
   def self.continue
     puts "Would you like to continue?"
+    puts "If not, you may 'save' or 'exit'."
   end
 
   def self.save
