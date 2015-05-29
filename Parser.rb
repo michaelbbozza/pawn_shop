@@ -1,25 +1,5 @@
 require 'csv'
-require_relative 'chessboard.rb'
 
-# module Parser
-
-#   def self.import(file,game_name)
-#     chess_positions = CSV.read(file,:headers => true,:header_converters => :symbol)
-#   end
-
-#   def self.save(datum)
-#     CSV.open('chess.csv',"wb") do |csv|
-#       csv << ['position','class','color']
-#       datum.each do |key,value|
-#         if value == []
-#           csv << [key,value]
-#         else
-#           csv << [key,value.class,value.color]
-#         end
-#       end
-#     end
-#   end
-# end
 
 
 module Parser
