@@ -11,13 +11,11 @@ class ChessBoard
     ## set up a hash with 64 empty values
     @board = LoadBoard.load_board
     @winner = nil
-    @black_moves = generate_moves("black")
-    @white_moves = generate_moves("white")
+
     @b_king = generate_king("black")
     @w_king = generate_king("white")
-    @attack_pieces_white = []
-    @attack_pieces_black = []
-    # binding.pry
+    @black_moves = [1]
+    @white_moves = [2]
   end
 
   def generate_king(color)
@@ -25,13 +23,40 @@ class ChessBoard
   end
 
   def generate_moves(color)
-    all_moves = []
-    @board.select {|k,v| v.class.ancestors.include?(Piece) && v.color == color }.each do |piece, val|
-      all_moves << val.possible_moves(piece, @board)
+    if !in_check?(color)
+      all_moves = []
+      @board.select {|k,v| v.class.ancestors.include?(Piece) && v.color == color }.each do |piece, val|
+        all_moves << val.possible_moves(piece, @board)
+      end
+    else
+      all_moves = []
+      @board.select {|k,v| v.class.ancestors.include?(Piece) && v.color == color }.each do |piece, val|
+        piece_moves = val.possible_moves(piece, @board)
+        piece_moves.each do |piece_move|
+          move(HashMap.to_board(piece).join, piece_move.join(""))
+          if in_check?(color)
+            move(piece_move.join(""), HashMap.to_board(piece).join)
+          else
+            all_moves << piece_move
+            move(piece_move.join(""), HashMap.to_board(piece).join)
+          end
+        end
+      end
     end
     all_moves.delete("[]")
     all_moves.flatten.each_slice(2).to_a
     # binding.pry
+  end
+
+  def checkmate?
+    if @black_moves.size == 0
+      @winner = "white"
+      return true
+    elsif @white_moves.size == 0
+      @winner = "black"
+      return true
+    end
+    return false
   end
 
   def in_check?(color)
@@ -67,6 +92,8 @@ class ChessBoard
     @w_king = generate_king("white")
     @black_moves = generate_moves("black")
     @white_moves = generate_moves("white")
+    @black_moves = generate_moves("black")
+    @white_moves = generate_moves("white")
   end
 
   def test(board)
@@ -76,12 +103,11 @@ class ChessBoard
     puts board.b_king
     puts HashMap.to_board(@b_king.keys[0])
     puts board.white_moves.to_s
+    if checkmate?
+      puts "Winner is #{@winner}"
+    end
   end
-
-
 end
-
-
 
 board = ChessBoard.new
 board.to_s
@@ -100,7 +126,6 @@ board.move("a6", "a5")
 board.test(board)
 board.move("c4", "f7")
 board.test(board)
-
 
 
 
