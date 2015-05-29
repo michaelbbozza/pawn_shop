@@ -67,9 +67,10 @@ class Bishop < Piece
     BISHOP_DIRECTIONS.each do |direction|
       (1..8).each do |int|
         new_direction = direction.map {|x| x*int }
+        last_space = poss_moves.last
         next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
         if board[next_space.join("")] == [] ||
-          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color && !board[last_space.join("")].class.ancestors.include?(Piece))
           poss_moves << next_space
         else
           break
@@ -77,7 +78,7 @@ class Bishop < Piece
       end
     end
     poss_moves.map! {|move| HashMap.to_board(move) }
-    poss_moves.to_s
+    poss_moves
   end
 end
 
@@ -97,9 +98,10 @@ class Rook < Piece
     ROOK_DIRECTIONS.each do |direction|
       (1..8).each do |int|
         new_direction = direction.map {|x| x*int }
+        last_space = poss_moves.last
         next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
         if board[next_space.join("")] == [] ||
-          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color && !board[last_space.join("")].class.ancestors.include?(Piece))
           poss_moves << next_space
         else
           break
@@ -107,7 +109,7 @@ class Rook < Piece
       end
     end
     poss_moves.map! {|move| HashMap.to_board(move) }
-    poss_moves.to_s
+    poss_moves
   end
 end
 
@@ -160,9 +162,10 @@ class Queen < Piece
     BISHOP_DIRECTIONS.each do |direction|
       (1..8).each do |int|
         new_direction = direction.map {|x| x*int }
+        last_space = poss_moves.last
         next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
         if board[next_space.join("")] == [] ||
-          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color && !board[last_space.join("")].class.ancestors.include?(Piece))
           poss_moves << next_space
         else
           break
@@ -172,9 +175,10 @@ class Queen < Piece
     ROOK_DIRECTIONS.each do |direction|
       (1..8).each do |int|
         new_direction = direction.map {|x| x*int }
+        last_space = poss_moves.last
         next_space = [(location.split("")[0].to_i + new_direction[0]).to_s, (location.split("")[1].to_i + new_direction[1]).to_s]
         if board[next_space.join("")] == [] ||
-          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color)
+          (board[next_space.join("")].class.ancestors.include?(Piece) && board[next_space.join("")].color != @color && !board[last_space.join("")].class.ancestors.include?(Piece))
           poss_moves << next_space
         else
           break
@@ -183,7 +187,7 @@ class Queen < Piece
     end
     ## convert the indices to user readable format
     poss_moves.map! {|move| HashMap.to_board(move) }
-    poss_moves.to_s
+    poss_moves
   end
 end
 
@@ -217,7 +221,7 @@ class King < Piece
     end
     ## convert the indices to user readable format
     poss_moves = temp_array.map! {|move| HashMap.to_board(move) }
-    poss_moves.to_s
+    poss_moves
   end
 end
 

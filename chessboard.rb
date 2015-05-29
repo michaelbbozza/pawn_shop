@@ -31,6 +31,7 @@ class ChessBoard
     end
     all_moves.delete("[]")
     all_moves.flatten.each_slice(2).to_a
+    # binding.pry
   end
 
   def in_check?(color)
@@ -60,37 +61,46 @@ class ChessBoard
     @board[source] = []
   end
 
+
+  def set_variables
+    @b_king = generate_king("black")
+    @w_king = generate_king("white")
+    @black_moves = generate_moves("black")
+    @white_moves = generate_moves("white")
+  end
+
+  def test(board)
+    set_variables
+    board.to_s
+    puts board.in_check?("black")
+    puts board.b_king
+    puts HashMap.to_board(@b_king.keys[0])
+    puts board.white_moves.to_s
+  end
+
+
 end
 
-board = ChessBoard.new
 
+
+board = ChessBoard.new
 board.to_s
 
 board.move("e2", "e4")
+board.test(board)
 board.move("a7", "a6")
-board.in_check?("black")
+board.test(board)
 board.move("d1", "h5")
+board.test(board)
 board.move("b8", "a6")
+board.test(board)
 board.move("f1", "c4")
+board.test(board)
 board.move("a6", "a5")
+board.test(board)
 board.move("c4", "f7")
-board.white_moves = board.generate_moves("white")
-board.w_king = board.generate_king("black")
-p board.white_moves
-p board.b_king
-puts board.in_check?("black")
+board.test(board)
 
-board.to_s
-# binding.pry
-#Queen test
-# puts board.board["75"].possible_moves("85", board.board)
-# #Bishop test
-# puts board.board["86"].possible_moves("86", board.board)
-# #Pawn test
-# puts board.board["71"].possible_moves("71", board.board)
-# #King test
-# puts board.board["84"].possible_moves("84", board.board)
-# puts board.in_check?("white")
 
 
 
