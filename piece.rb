@@ -64,7 +64,6 @@ class Knight < Piece
     KNIGHT_DIRECTIONS.each do | xy |
       poss_moves << [(location.split("")[0].to_i + xy[0]), (location.split("")[1].to_i + xy[1])]
     end
-    binding.pry
     poss_moves.delete_if{|arr| !arr.all? {|x| x > 0 && x <= 8 }}
 
     poss_moves.each_with_index do |move, index|
