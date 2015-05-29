@@ -1,21 +1,53 @@
 require 'csv'
 require_relative 'chessboard.rb'
 
+# module Parser
+
+#   def self.import(file,game_name)
+#     chess_positions = CSV.read(file,:headers => true,:header_converters => :symbol)
+#   end
+
+#   def self.save(datum)
+#     CSV.open('chess.csv',"wb") do |csv|
+#       csv << ['position','class','color']
+#       datum.each do |key,value|
+#         if value == []
+#           csv << [key,value]
+#         else
+#           csv << [key,value.class,value.color]
+#         end
+#       end
+#     end
+#   end
+# end
+
 
 module Parser
 
-  def self.import(file,game_name)
-    chess_positions = CSV.read(file,:headers => true,:header_converters => :symbol)
+  def self.import(file)
+    chess_hash = {}
+    chess_board = CSV.read(file,:headers => true,:header_converters => :symbol)
+    chess_board.each {|row| chess_hash[row[:position]] = piece(row[:class],row[:color]) }
+    chess_hash
   end
 
   def self.save(datum)
-    CSV.open('chess.csv',"a+") do |csv|
-      @board.each do|key,value|
-        csv << @board[key]
-        csv << @board[value].class
-        csv << @board[value].color
+    CSV.open('chess.csv',"wb") do |csv|
+      csv << ['position','class','color']
+      datum.each do |key,value|
+        if value == []
+          csv << [key,value]
+        else
+          csv << [key,value.class,value.color]
+        end
       end
     end
+  end
+
+  def self.piece(string_class,color)
+    return [] if string_class == "[]"
+     piece_class = Kernel.const_get string_class
+     piece_class.new(color)
   end
 
 end
