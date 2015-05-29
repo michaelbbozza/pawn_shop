@@ -34,7 +34,8 @@ end
 board = ChessBoard.new
 
 board.to_s
-board.move("e2", "e5")
+board.move("e2", "e4")
+board.move("d7", "d5")
 board.to_s
-puts board.board["74"].possible_moves("74", board.board)
+puts board.board["44"].possible_moves("44", board.board)
 
