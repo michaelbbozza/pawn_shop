@@ -57,8 +57,8 @@ module ControllerView
     PLAYER.rotate!
   end
 
-  def self.turn
-    puts "#{PLAYER.first} may go."
+  def self.turn(player)
+    puts "#{player}'s turn!"
   end
 
   def self.continue
@@ -73,6 +73,10 @@ module ControllerView
 
   def self.goodbye
     puts "Goodbye"
+  end
+
+  def self.check?
+    puts "Check motha fucka"
   end
 
   def self.user_input

@@ -8,9 +8,11 @@ require 'pry'
 
 class Controller
   attr_reader :game_board
+  attr_accessor :user
   def initialize
     ControllerView.clear_terminal
     Menu.start
+    @user = "white"
   end
 
   def self.start_game
@@ -20,11 +22,11 @@ class Controller
     input = ControllerView.begin
     if input == 'yes'
       sleep 0.5
-      run_new_game
+      run_new_game(@user)
     elsif input != 'no'
       input = ControllerView.reenter_option
       if input == 'yes'
-        run_new_game
+        run_new_game(@user)
       elsif input == 'no'
         ControllerView.goodbye
       end
@@ -42,11 +44,10 @@ class Controller
     ControllerView.print(@game_board.to_s)
     ControllerView.turn
     ControllerView.rotate_player
-    run_new_game
+    run_new_game(user)
   end
 
-  def self.run_new_game
-    20.times do
+  def self.run_new_game(user)
       source = ControllerView.get_user_piece
       board_index = @game_board.number_converter(source)
       # binding.pry
@@ -62,22 +63,29 @@ class Controller
       sleep 0.4
       @game_board.move(source,target)
       @game_board.set_variables
-      @game_board.in_check?(player) # may need to be changed
+      if @game_board.in_check?(user) == true
+        ControllerView.check?
+        sleep(1.0)
+        else
+        nil# may need to be changed
+      end
       ControllerView.clear_terminal
       ControllerView.print(@game_board.to_s)
-      ControllerView.turn
-      Parser.save(@game_board.board)
-    end
-    ControllerView.continue
-    input = ControllerView.user_input
-    if input == 'yes'
-      run_new_game
-    elsif input == 'save'
-      Parser.save(@game_board.board)
-    elsif input == 'no' ||input == 'exit' || input == 'quit'
-      ControllerView.clear_terminal
-      ControllerView.goodbye
-    end
+      # Parser.save(@game_board.board)
+    # end
+    # ControllerView.continue
+    # input = ControllerView.user_input
+    # if input == 'yes'
+    #   run_new_game
+    # elsif input == 'save'
+    #   Parser.save(@game_board.board)
+    # elsif input == 'no' ||input == 'exit' || input == 'quit'
+    #   ControllerView.clear_terminal
+    #   ControllerView.goodbye
+    # end
+    user == "white" ? user = "black" : user = "white"
+    ControllerView.turn(user)
+    run_new_game(@user)
   end
 end
 
