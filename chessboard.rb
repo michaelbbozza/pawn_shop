@@ -1,6 +1,7 @@
 require 'pry'
 require_relative 'loadboard'
 require_relative 'piece'
+require_relative 'Parser.rb'
 
 class ChessBoard
   include LoadBoard
@@ -32,11 +33,29 @@ class ChessBoard
 end
 
 
+module Parser
+
+  def self.import(file,game_name)
+    chess_positions = CSV.read(file,:headers => true,:header_converters => :symbol)
+  end
+
+  def self.save(datum)
+    CSV.open('chess.csv',"a+") do |csv|
+      datum.each do |key,value|
+        csv << [key,value]
+      end
+    end
+  end
+
+end
+
 board = ChessBoard.new
+
 
 board.to_s
 board.move("e2", "e5")
 board.to_s
 puts board.board["12"].possible_moves("12", board.board)
+
 
 
