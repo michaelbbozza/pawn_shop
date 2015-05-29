@@ -20,6 +20,51 @@ class Pawn < Piece
       @character = "♙"
     end
   end
+
+  def possible_moves(location, board)
+    # binding.pry
+    poss_moves = []
+    if @color == "white"
+      next_piece = (location.split("")[0].to_i - 1).to_s + location.split("")[1]
+      if board[next_piece] == []
+        poss_moves << next_piece.split("")
+        next_next = (next_piece.split("")[0].to_i - 1).to_s + next_piece.split("")[1].to_s
+        if board[next_next] == []
+          poss_moves << next_next.split("")
+        end
+      end
+      diagonal_left  = next_piece.split("")[0] + (next_piece.split("")[1].to_i + 1).to_s
+      diagonal_right = next_piece.split("")[0] + (next_piece.split("")[1].to_i - 1).to_s
+      if board[diagonal_left].class.ancestors.include?(Piece) && board[diagonal_left].color != @color
+        poss_moves << diagonal_left.split("")
+      end
+      if board[diagonal_right].class.ancestors.include?(Piece) && board[diagonal_right].color != @color
+        poss_moves << diagonal_right.split("")
+      end
+    else
+      next_piece = (location.split("")[0].to_i + 1).to_s + location.split("").to_s
+      if board[next_piece] == []
+        poss_moves << next_piece.split("")
+        next_next = (next_piece.split("")[0].to_i + 1).to_s + next_piece.split("")[1].to_s
+        # binding.pry
+        if board[next_next] == []
+          poss_moves << next_next.split("")
+        end
+      end
+      diagonal_left  = next_piece.split("")[0] + (next_piece.split("")[1].to_i + 1).to_s
+      diagonal_right = next_piece.split("")[0] + (next_piece.split("")[1].to_i - 1).to_s
+      if board[diagonal_left].class.ancestors.include?(Piece) && board[diagonal_left].color != @color
+        poss_moves << diagonal_left.split("")
+      end
+      if board[diagonal_right].class.ancestors.include?(Piece) && board[diagonal_right].color == @color
+        poss_moves << diagonal_right.split("")
+      end
+    end
+
+    # ## convert the indices to user readable format
+    poss_moves.map! {|move| HashMap.to_board(move) }
+    poss_moves.to_s
+  end
 end
 
 class Bishop < Piece
