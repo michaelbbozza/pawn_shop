@@ -1,4 +1,3 @@
-# require
 module Menu
 
   def self.start
